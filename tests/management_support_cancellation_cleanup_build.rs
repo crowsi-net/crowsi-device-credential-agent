@@ -1,0 +1,42 @@
+fn build(
+    request: &EndpointRevocationExecutionCancelFinalizeRequestV1,
+    request_digest: String,
+    pending_digest: String,
+    response_digest: String,
+    acknowledge: AuthorityRequestV1,
+    revision: u64,
+    now: u64,
+) -> EndpointRevocationExecutionCancellationCleanupV1 {
+    let token_issued_at = request.cancel_pending_exchange.response.issued_at_epoch_s;
+    EndpointRevocationExecutionCancellationCleanupV1 {
+        schema: ENDPOINT_REVOCATION_EXECUTION_CANCELLATION_CLEANUP_SCHEMA.into(),
+        cleanup_id: String::new(),
+        cancel_finalize_request_sha256: request_digest,
+        cancellation_id: request.cancellation.cancellation_id.clone(),
+        cancel_pending_command_digest_sha256: pending_digest,
+        cancel_pending_response_digest_sha256: response_digest,
+        source_device_ref: request.cancellation.source_device_ref.clone(),
+        cleanup_completed_revision: revision,
+        cleanup_config_generation: 1,
+        operation: request.cancellation.operation.clone(),
+        snapshot_revision: revision,
+        acknowledge_request: acknowledge,
+        token: SignedEvidenceV1 {
+            schema: SIGNED_EVIDENCE_SCHEMA.into(),
+            role: VerificationRole::RevocationCancellationCleanup,
+            proof_id: String::new(),
+            key_id: "revocation-reservation-key".into(),
+            issued_at_epoch_s: token_issued_at,
+            expires_at_epoch_s: token_issued_at.saturating_add(120),
+            binding_sha256: String::new(),
+            signature: String::new(),
+        },
+        issuer: "crowsi-credential-authority".into(),
+        audience: "endpoint-a".into(),
+        config_generation: 1,
+        issued_at_epoch_s: now,
+        expires_at_epoch_s: now.saturating_add(30),
+        key_id: "management-key".into(),
+        signature: String::new(),
+    }
+}

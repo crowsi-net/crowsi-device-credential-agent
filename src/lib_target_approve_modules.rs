@@ -1,0 +1,35 @@
+mod target_approve;
+mod target_approve_current;
+mod target_approve_custody;
+mod target_approve_identity_flow;
+mod target_approve_key;
+mod target_approve_native;
+mod target_approve_native_flow;
+mod target_approve_pa;
+mod target_approve_pa_process;
+mod target_approve_pa_process_lifecycle;
+#[cfg(test)]
+mod target_approve_pa_process_tests;
+mod target_approve_pa_verify;
+mod target_approve_prepare;
+mod target_approve_process_identity;
+mod target_approve_projection;
+mod target_approve_proof;
+mod target_approve_response;
+mod target_approve_state;
+mod target_approve_state_expiration;
+#[cfg(test)]
+mod target_approve_state_expiration_tests;
+mod target_approve_state_external;
+mod target_approve_state_finish_validation;
+mod target_approve_state_identity_phase;
+mod target_approve_state_phase;
+mod target_approve_state_phase_validation;
+mod target_approve_state_reserve;
+mod target_approve_state_reserve_values;
+mod target_approve_state_response;
+mod target_approve_state_transition;
+mod target_approve_state_types;
+mod target_approve_state_validation;
+mod target_approve_state_wire;
+mod target_approve_verify;

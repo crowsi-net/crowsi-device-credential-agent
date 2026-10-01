@@ -1,0 +1,46 @@
+use crowsi_credential_authority_contracts::{
+    EndpointManagementEnvelopeV2, EndpointPreparedLookupRequestV1,
+    EndpointPreparedLookupResponseV1, EndpointRevocationExecutionCancelCleanupCompleteRequestV1,
+    EndpointRevocationExecutionCancelFinalizeRequestV1, EndpointRevocationExecutionCancelRequestV1,
+    EndpointRevocationExecutionCancellationCleanupCompleteV1,
+    EndpointRevocationExecutionCancellationCleanupV1, EndpointRevocationExecutionCancellationV1,
+    ManagementProjectionBodyV2, ManagementProjectionV2, ManagementRequestV2,
+    SignedAuthorityExchangeV1,
+};
+use ihat_identity_assertion_contracts::AuthorityRequestV1;
+
+#[derive(Clone, Deserialize, Eq, PartialEq, Serialize)]
+#[serde(deny_unknown_fields)]
+pub(super) struct CancelRecordV1 {
+    pub operation_id: String,
+    pub browser_request: ManagementRequestV2,
+    pub browser_request_digest_sha256: String,
+    pub phase: CancelPhaseV1,
+    pub current_request: AuthorityRequestV1,
+    pub current_exchange: Option<SignedAuthorityExchangeV1>,
+    pub current_observed_at_epoch_s: Option<u64>,
+    pub lookup_request: Option<EndpointPreparedLookupRequestV1>,
+    pub lookup_response: Option<EndpointPreparedLookupResponseV1>,
+    pub central_envelope: Option<Box<EndpointManagementEnvelopeV2>>,
+    pub response_json: Option<String>,
+    pub response: Option<ManagementProjectionV2>,
+    pub cancelled_projection_body: Option<ManagementProjectionBodyV2>,
+    pub revocation_begin_exchange: Option<SignedAuthorityExchangeV1>,
+    pub revocation_response_trust: Option<CancelResponseTrustPinV1>,
+    pub pre_final_acceptance_request_sha256: Option<String>,
+    pub execution_cancel_request: Option<Box<EndpointRevocationExecutionCancelRequestV1>>,
+    pub execution_cancellation: Option<EndpointRevocationExecutionCancellationV1>,
+    pub execution_cancellation_trust: Option<CancelCentralTrustPinV1>,
+    pub cancel_finalize_request: Option<EndpointRevocationExecutionCancelFinalizeRequestV1>,
+    pub cancellation_cleanup: Option<EndpointRevocationExecutionCancellationCleanupV1>,
+    pub cancellation_cleanup_trust: Option<CancelCentralTrustPinV1>,
+    pub cleanup_ack_exchange: Option<SignedAuthorityExchangeV1>,
+    pub cleanup_response_trust: Option<CancelResponseTrustPinV1>,
+    pub cleanup_complete_request: Option<EndpointRevocationExecutionCancelCleanupCompleteRequestV1>,
+    pub cleanup_complete_response: Option<EndpointRevocationExecutionCancellationCleanupCompleteV1>,
+    pub cleanup_complete_trust: Option<CancelCentralTrustPinV1>,
+    pub cleanup_completed_id: Option<String>,
+    pub future_bytes_reserved: u64,
+    pub expires_at_epoch_s: u64,
+    pub updated_at_epoch_s: u64,
+}
